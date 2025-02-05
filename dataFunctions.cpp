@@ -81,6 +81,8 @@ void mainMenu(void) {
         default:
             printf("Invalid choice. Please select a number between 1 and 5.\n");
         }
+
+        //Ends looping menu
         if (loopRunning == false)
         {
             break;
@@ -287,7 +289,7 @@ static void viewBooks(BookNode* head)
         i = i->next;
         if (i == NULL)
         {
-            printf("There are no books in the catalogue");
+            printf("There are no books in the catalogue"); 
         }
     }
 }
