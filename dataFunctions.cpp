@@ -287,9 +287,11 @@ static void viewBooks(BookNode* head)
     {
         printf("ID: %d | Title: %s | Author: %s | Publication Year: %d", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
         i = i->next;
-        if (i == NULL)
-        {
-            printf("There are no books in the catalogue"); 
-        }
+
+    }
+
+    if (i == NULL)
+    {
+        printf("There are no books in the catalogue"); 
     }
 }
