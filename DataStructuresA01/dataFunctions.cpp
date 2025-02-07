@@ -13,7 +13,7 @@
 //
 // FUNCTION   :       displayMenu
 // DESCRIPTION:       This function displays all options to the user for the book system.
-// PARAMETERS :       none
+// PARAMETERS :       none.
 // RETURNS    :       none.
 //
 void displayMenu(void) {
@@ -23,7 +23,8 @@ void displayMenu(void) {
     printf("3.Update a book in the system.\n");
     printf("4.Delete a book from the system.\n");
     printf("5.Search for a book in the system.\n");
-    printf("Enter the number for the option you desire:\n");
+    printf("6.Exit Program");
+    printf("\nEnter the number for the option you desire:");
 }
 
 
@@ -37,6 +38,7 @@ void mainMenu(void) {
 
     //Declaring all local variables used in the program.
     BookNode* bookList = NULL;
+    BookNode* head = NULL;
     int choice;
     bool loopRunning = true;
 
@@ -61,6 +63,7 @@ void mainMenu(void) {
             break;
         case 2:
             printf("Viewing all books in system...\n");
+            viewBooks(bookList);
             break;
         case 3:
             printf("Updating book in system...\n");
@@ -72,8 +75,18 @@ void mainMenu(void) {
             printf("Searching for a book in system...\n");
             searchABook(bookList);
             break;
+        case 6:
+            printf("Exiting Program...\n");
+            loopRunning = false;
+            break;
         default:
             printf("Invalid choice. Please select a number between 1 and 5.\n");
+        }
+
+        //Ends looping menu
+        if (loopRunning == false)
+        {
+            break;
         }
 
     }
@@ -261,6 +274,7 @@ int titleContains(const char* title, const char* query) {
     //Check if the query is in the title
     return strstr(lowerTitle, lowerQuery) != NULL;
 }
+
 
 //
 // FUNCTION   :       viewBooks
