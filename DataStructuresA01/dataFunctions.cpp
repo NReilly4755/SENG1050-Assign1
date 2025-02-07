@@ -261,3 +261,24 @@ int titleContains(const char* title, const char* query) {
     //Check if the query is in the title
     return strstr(lowerTitle, lowerQuery) != NULL;
 }
+
+//
+// FUNCTION   :       viewBooks
+// DESCRIPTION:       This function runs through and displays all books within the linked list
+// PARAMETERS :       BookNode* head, a pointer to the start of the linked list
+// RETURNS    :       Nothing
+//
+static void viewBooks(BookNode* head)
+{
+    BookNode* i = head;
+    while (i != NULL)
+    {
+        printf("ID: %d | Title: %s | Author: %s | Publication Year: %d", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
+        i = i->next;
+    }
+
+    if (i == NULL)
+    {
+        printf("There are no books in the catalogue"); 
+    }
+}
