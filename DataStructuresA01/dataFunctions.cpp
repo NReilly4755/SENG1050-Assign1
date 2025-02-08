@@ -102,9 +102,12 @@ void mainMenu(void) {
 // RETURNS    :       none.
 //
 void addABook(BookNode** head) {
+
+	//Declare local variable(s) used.
 	char choice;
 
-	//Create instances of Book struct type in memory as long as the function is called.
+
+	//Dynamically allocated struct Books in the list, as long as the memory is available.
 	do {
 		BookNode* newBook = (BookNode*)malloc(sizeof(BookNode));
 		if (newBook == NULL) {
@@ -112,13 +115,17 @@ void addABook(BookNode** head) {
 			return;
 		}
 
-
-		//Logic that confirms the book id does not already exist in the system.
+		//Validate the book id number to be only integers and not char or double.
 		int validID = 0;
 		while (!validID) {
-			printf("Enter Book ID: ");
-			scanf_s("%d", &newBook->data.bookID);
+			printf("Enter Book ID (integer only): ");
+			if (scanf_s("%d", &newBook->data.bookID) != 1) {
+				printf("Invalid input. Please enter a valid integer.\n");
+				while (getchar() != '\n');
+				continue;
+			}
 
+			//Check after validating book id number that the id does not already exist.
 			if (isDuplicateID(*head, newBook->data.bookID)) {
 				printf("Error: Book ID already exists. Try again.\n");
 			}
@@ -127,26 +134,40 @@ void addABook(BookNode** head) {
 			}
 		}
 
-		//Getting the details of the book from the user.
-		printf("Enter Book Title: ");
-		//Consume the newline character left behind from entering function.
+		//Clear input buffer before using fgets so newline does not cascade into other parts of code.
 		getchar();
-		fgets(newBook->data.title, TITLE_LENG, stdin);
-		newBook->data.title[strcspn(newBook->data.title, "\n")] = '\0'; // Remove newline
 
+		//Get Book Title (remove newline, add null terminator).
+		printf("Enter Book Title: ");
+		fgets(newBook->data.title, TITLE_LENG, stdin);
+		newBook->data.title[strcspn(newBook->data.title, "\n")] = '\0';
+
+		//Get Author Name (remove newline, add null terminator).
 		printf("Enter Author Name: ");
 		fgets(newBook->data.author, AUTH_LENG, stdin);
 		newBook->data.author[strcspn(newBook->data.author, "\n")] = '\0';
 
-		printf("Enter Publication Year: ");
-		scanf_s("%d", &newBook->data.publicationYear);
-
+		//Validate Publication Year. Make sure it is int value only.
+		int validYear = 0;
+		while (!validYear) {
+			printf("Enter Publication Year: ");
+			if (scanf_s("%d", &newBook->data.publicationYear) != 1) {
+				printf("Invalid input. Please enter a valid integer.\n");
+				while (getchar() != '\n');  // Clear input buffer
+				continue;
+			}
+			validYear = 1;
+		}
+	
+		//Set the newbook to point to NULL as its added to the end of list (tail)
 		newBook->next = NULL;
 
-		//Add this to the end of the list.
+		//Append to list. CHeck here if its the first entry. If so, its the head.
 		if (*head == NULL) {
 			*head = newBook;
 		}
+
+		//Append to list. Assign temporary pointer to traverse the list. 
 		else {
 			BookNode* temp = *head;
 			while (temp->next != NULL) {
@@ -156,15 +177,13 @@ void addABook(BookNode** head) {
 		}
 
 		printf("Book added successfully!\n");
-
-		//Ask the user if they want to add another book into the system.
 		printf("Do you want to add another book? (y/n): ");
-		
-		//Gets the user input  for the choice
+		getchar();
 		scanf_s(" %c", &choice, (unsigned)sizeof(choice));
 
 	} while (choice == 'y' || choice == 'Y');
 }
+
 
 //
 // FUNCTION   :       searchABook
@@ -396,7 +415,7 @@ RETURNS: none.
 */
 void deleteABook(BookNode** head)
 {
-	char anotherDelete;  /* Stores the user's choice to delete another book */
+	char anotherDelete = 'm';  /* Stores the user's choice to delete another book */
 
 	do
 	{
@@ -618,6 +637,7 @@ void deleteABook(BookNode** head)
 		Ask if the user would like to delete another book.
 		Validate the input to accept only Y/y or N/n.
 		*/
+		bool loopstatus = true;
 		int validInput2 = 0;
 		do
 		{
