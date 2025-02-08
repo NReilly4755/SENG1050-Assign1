@@ -67,6 +67,7 @@ void mainMenu(void) {
 			break;
 		case 3:
 			printf("Updating book in system...\n");
+			updateBook(bookList);
 			break;
 		case 4:
 			printf("Deleting book in system...\n");
@@ -298,6 +299,91 @@ static void viewBooks(BookNode* head)
 	}
 }
 
+
+/*
+ * FUNCTION   : updateBook
+ * DESCRIPTION: Prompts the user to enter the ID of the book to update. If found, allows modification of the Title, Author,
+ *              and Publication Year. If not found, displays an appropriate message
+ * PARAMETERS : head of a pointer to the head of the linked list of BookNode struct.
+ * RETURNS    : VOID
+ */
+void updateBook(BookNode* head) {
+	char inputBuffer[128];
+	int id;
+
+	//Asks the user for the Book ID to update
+	printf("\nEnter the Book ID to update: ");
+	if (!fgets(inputBuffer, sizeof(inputBuffer), stdin)) {
+		printf("Error reading input\n");
+		return;
+	}
+	//Remove the '\n' and checks if the id is valid!
+	inputBuffer[strcspn(inputBuffer, "\n")] = '\0';
+	if (sscanf_s(inputBuffer, "%d", &id) != 1) {
+		printf("Invalid input, please enter a valid book id!\n");
+		return;
+	}
+
+	//Search for the book by the ID
+	BookNode* current = head;
+	while (current != NULL && current->data.bookID != id) {
+		current = current->next;
+	}
+	
+	//If the book is not found it breaks
+	if (current == NULL) {
+		printf("No book with ID %d found in the system!\n", id);
+		return;
+	}
+
+	printf("Book with ID %d found\n", id);
+
+	//Updating the title
+	printf("Current Title: %s\n", current->data.title);
+	printf("Enter new Title: ");
+	if (!fgets(inputBuffer, sizeof(inputBuffer), stdin)) {
+		printf("Error reading title!\n");
+		return;
+	}
+	inputBuffer[strcspn(inputBuffer, "\n")] = '\0';
+	if (strlen(inputBuffer) > 0) {
+		strcpy_s(current->data.title, TITLE_LENG, inputBuffer);
+	}
+
+	//Updating the author
+	printf("Current Author: %s\n", current->data.author);
+	printf("Enter new Author: ");
+	if (!fgets(inputBuffer, sizeof(inputBuffer), stdin)) {
+		printf("Error reading author!\n");
+		return;
+	}
+	inputBuffer[strcspn(inputBuffer, "\n")] = '\0';
+	if (strlen(inputBuffer) > 0) {
+		strcpy_s(current->data.author, AUTH_LENG, inputBuffer);
+	}
+
+	//Updating the publication year
+	int newYear;
+	printf("Current Publication Year: %d\n", current->data.publicationYear);
+	printf("Enter new Publication Year: ");
+	if (!fgets(inputBuffer, sizeof(inputBuffer), stdin)) {
+		printf("Error reading publication year!\n");
+		return;
+	}
+	inputBuffer[strcspn(inputBuffer, "\n")] = '\0';
+	if (strlen(inputBuffer) > 0) {
+		if (sscanf_s(inputBuffer, "%d", &newYear) != 1) {
+			printf("Invalid input for publication year, no update made for year!\n");
+		}
+		else {
+			current->data.publicationYear = newYear;
+		}
+	}
+
+	printf("Book updated successfully.\n");
+}
+
+
 /*
 FUNCTION: deleteABook
 DESCRIPTION:
@@ -307,7 +393,6 @@ After each deletion (or if no match is found), it allows the user to delete anot
 PARAMETERS: BookNode** head, a pointer to the pointer of the head of the list
 RETURNS: none.
 */
-
 void deleteABook(BookNode** head)
 {
 	char anotherDelete;  /* Stores the user's choice to delete another book */
@@ -554,3 +639,5 @@ void deleteABook(BookNode** head)
 
 	} while (anotherDelete == 'Y' || anotherDelete == 'y');
 }
+
+
