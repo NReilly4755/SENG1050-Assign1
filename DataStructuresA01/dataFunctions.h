@@ -42,7 +42,7 @@ void mainMenu(void);
 void addABook(BookNode** head);
 void searchABook(BookNode* head);
 void updateBook(BookNode* head);
-static void viewBooks(BookNode* head);
+void viewBooks(BookNode* head);
 int isDuplicateID(BookNode* head, int id);
 int titleContains(const char* title, const char* query);
 void toLowerCase(char* str);

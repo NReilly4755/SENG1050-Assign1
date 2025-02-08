@@ -17,14 +17,15 @@
 // RETURNS    :       none.
 //
 void displayMenu(void) {
-	printf("----------MAIN MENU----------\n");
+	printf("\n----------MAIN MENU----------\n");
 	printf("1.Add a book into system.\n");
 	printf("2.View all books in the system.\n");
 	printf("3.Update a book in the system.\n");
 	printf("4.Delete a book from the system.\n");
 	printf("5.Search for a book in the system.\n");
 	printf("6.Exit Program");
-	printf("\nEnter the number for the option you desire:");
+	printf("\n-----------------------------\n");
+	printf("Enter the number for the option you desire:");
 }
 
 
@@ -158,9 +159,9 @@ void addABook(BookNode** head) {
 
 		//Ask the user if they want to add another book into the system.
 		printf("Do you want to add another book? (y/n): ");
-		//Consume the newline before getting choice to confirm the choice is picked up only.
-		getchar();
-		scanf_s("%c", &choice);
+		
+		//Gets the user input  for the choice
+		scanf_s(" %c", &choice, (unsigned)sizeof(choice));
 
 	} while (choice == 'y' || choice == 'Y');
 }
@@ -284,7 +285,7 @@ int titleContains(const char* title, const char* query) {
 // PARAMETERS :       BookNode* head, a pointer to the start of the linked list
 // RETURNS    :       Nothing
 //
-static void viewBooks(BookNode* head)
+void viewBooks(BookNode* head)
 {
 	BookNode* i = head;
 	while (i != NULL)
@@ -417,7 +418,7 @@ void deleteABook(BookNode** head)
 		int validTitle = 0;
 		while (!validTitle)
 		{
-			printf("Enter the book title (partial or full) to delete,\nor enter '^' to go back to the main menu: ");
+			printf("Enter the book title to delete ('^' to go back):");
 			if (fgets(searchTitle, TITLE_LENG, stdin) == NULL)
 				continue;
 			size_t len = strlen(searchTitle);
