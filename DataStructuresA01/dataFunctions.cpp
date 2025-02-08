@@ -293,17 +293,11 @@ void viewBooks(BookNode* head)
         printf("ID: %d | Title: %s | Author: %s | Publication Year: %d\n", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
         i = i->next; 
     }
-	BookNode* i = head;
-	while (i != NULL)
-	{
-		printf("ID: %d | Title: %s | Author: %s | Publication Year: %d", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
-		i = i->next;
-	}
 
-	if (i == NULL)
-	{
-		printf("There are no books in the catalogue");
-	}
+    if (head == NULL)
+    {
+        printf("There are no books in the catalogue\n");
+    } 
 }
 
 
@@ -647,10 +641,3 @@ void deleteABook(BookNode** head)
 	} while (anotherDelete == 'Y' || anotherDelete == 'y');
 }
 
-
-    if (head == NULL)
-    {
-        printf("There are no books in the catalogue\n");
-    }
-   
-}
