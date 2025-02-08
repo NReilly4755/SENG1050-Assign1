@@ -288,12 +288,14 @@ int titleContains(const char* title, const char* query) {
 void viewBooks(BookNode* head)
 {
     BookNode* i = head;
+	//Loop that will run through the list with books in it
     while (i != NULL)
     {
         printf("ID: %d | Title: %s | Author: %s | Publication Year: %d\n", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
+		//This sends it to the next book in the list
         i = i->next; 
     }
-
+	//if the list is empty display error message
     if (head == NULL)
     {
         printf("There are no books in the catalogue\n");
