@@ -44,4 +44,5 @@ void searchABook(BookNode* head);
 int isDuplicateID(BookNode* head, int id);
 int titleContains(const char* title, const char* query);
 void toLowerCase(char* str);
+void viewBooks(BookNode* head);
 

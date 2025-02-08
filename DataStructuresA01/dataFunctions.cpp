@@ -282,17 +282,18 @@ int titleContains(const char* title, const char* query) {
 // PARAMETERS :       BookNode* head, a pointer to the start of the linked list
 // RETURNS    :       Nothing
 //
-static void viewBooks(BookNode* head)
+void viewBooks(BookNode* head)
 {
     BookNode* i = head;
     while (i != NULL)
     {
-        printf("ID: %d | Title: %s | Author: %s | Publication Year: %d", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
-        i = i->next;
+        printf("ID: %d | Title: %s | Author: %s | Publication Year: %d\n", i->data.bookID, i->data.title, i->data.author, i->data.publicationYear);
+        i = i->next; 
     }
 
-    if (i == NULL)
+    if (head == NULL)
     {
-        printf("There are no books in the catalogue"); 
+        printf("There are no books in the catalogue\n");
     }
+   
 }
